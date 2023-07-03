@@ -13,7 +13,7 @@ Alls cripts are dependent on the `[data-testid]` attribute (in most cases) on pa
 ## Reddit
 
 ### Required:
-- You must use old.reddit.com for this script. Change it in your user preferences, near the bottom.
+- You must use `old.reddit.com`. Change it in your user preferences, near the bottom.
 - You must be on the desktop site.
 
 ### Recommended:
