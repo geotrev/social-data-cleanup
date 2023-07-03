@@ -18,16 +18,16 @@ async function exec() {
   console.log("🧹 Deleting tweets");
 
   for (const cell of cells) {
-    const overflowBtn = cell.querySelector('[aria-label="Share Tweet"]');
+    const shareBtn = cell.querySelector('[aria-label="Share Tweet"]');
 
-    overflowBtn.click();
+    shareBtn.click();
     await wait();
 
-    const deleteBtn = document.querySelector(
+    const unbookmarkItem = document.querySelector(
       '[data-testid="Dropdown"] > [role="menuitem"]:last-child'
     );
 
-    deleteBtn.click();
+    unbookmarkItem.click();
     await wait();
   }
 
