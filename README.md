@@ -8,7 +8,7 @@ _WARNING: Although the scripts are tested and safe as of the last date of their 
 
 ## Twitter
 
-Alls cripts are dependent on the `[data-testid]` attribute (in most cases) on page elements, so if those go away anytime in the future, this script won't work. It runs no truthy heuristics, so the scripts will immediately fail if any query selectors return null.
+All scripts are dependent on the `[data-testid]` attribute (in most cases) on page elements, so if those go away anytime in the future, this script won't work. It runs no truthy heuristics, so the scripts will immediately fail if any query selectors return null.
 
 ## Reddit
 
