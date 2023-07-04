@@ -62,7 +62,7 @@ async function exec() {
       // Unfortunately Twitter doesn't automatically purge these. :/
       const timelineCells = [...cellContainer.parentNode.children]
       const cellIndex = timelineCells.indexOf(cellContainer)
-      timelineCells.slice(0, cellIndex).toReversed().forEach(child => child.parentNode.removeChild(child))
+      timelineCells.slice(0, cellIndex).forEach(child => child.parentNode.removeChild(child))
     }
 
     await wait();
