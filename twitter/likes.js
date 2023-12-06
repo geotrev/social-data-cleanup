@@ -15,7 +15,7 @@
   
   async function wait() {
     return new Promise((done) =>
-      setTimeout(() => requestAnimationFrame(done), DELETE_DELAY)
+      setTimeout(() => requestAnimationFrame(done), INTERACTION_DELAY)
     );
   }
   
