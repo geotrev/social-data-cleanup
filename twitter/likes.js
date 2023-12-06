@@ -1,46 +1,55 @@
 /**
-  * Page: twitter.com/<user_handle>/likes
+  * Pages:
+  * - twitter.com/<user_handle>/likes
+  *
   * Runs from: Dev tools console
   */
 
-let DELETE_DELAY = 150
-
-async function wait() {
-  return new Promise((done) =>
-    setTimeout(() => requestAnimationFrame(done), DELETE_DELAY)
-  );
-}
-
-function queryCells() {
-  return [...document.querySelectorAll('[data-testid="tweet"]')];
-}
-
-async function exec() {
-  const cells = queryCells();
+(async function exec(_cells = []) {
+  /**
+    * Timing can sometimes be sensitive on lower end PCs/Macs. If that's the case, increase this number in increments of 100 until the script is stable.
+    *
+    * NOTE: 500 = 500 milliseconds = 0.5 seconds
+    */
+  let DELETE_DELAY = 150
+  
+  async function wait() {
+    return new Promise((done) =>
+      setTimeout(() => requestAnimationFrame(done), DELETE_DELAY)
+    );
+  }
+  
+  function queryCells() {
+    return [...document.querySelectorAll('[data-testid="tweet"]')];
+  } 
+ 
+  let cells = _cells.length ? _cells : queryCells();
   console.log("🧹 Removing likes...");
 
   for (const cell of cells) {
-    const cellContainer = cell.closest('[data-testid="cellInnerDiv"]')
-    const unlikeBtn = cell.querySelector('[data-testid="unlike"]');
+    let cellContainer = cell.closest('[data-testid="cellInnerDiv"]')
+    let unlikeBtn = cell.querySelector('[data-testid="unlike"]');
 
     if (unlikeBtn) {
-        unlikeBtn.click();
-        await wait()
+      unlikeBtn.click();
+      await wait()
     }
     
-    cellContainer.parentNode.removeChild(cellContainer)
+    cellContainer.parentNode.removeChild(cellContainer) 
 
+    cellContainer = undefined
+    unlikeBtn = undefined
+   
     await wait();
   }
 
-  const moreCells = queryCells();
+  cells = queryCells();
+  DELETE_DELAY = undefined
 
-  if (moreCells.length) {
-    console.log("🧲 There are more likes to remove");
-    return exec();
+  if (cells.length) {
+     console.log("🧲 There are more likes to remove");
+     return exec(cells);
+  } else {
+    console.log("✨ Done!");
   }
-
-  console.log("✨ Done!");
-}
-
-exec()
+})()
