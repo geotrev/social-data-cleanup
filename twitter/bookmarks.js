@@ -4,7 +4,6 @@
   */
 
 (async function exec(_cells = []) {
-  
   /**
     * Timing can sometimes be sensitive on lower end PCs/Macs. If that's the case, increase this number in increments of 100 until the script is stable.
     *
