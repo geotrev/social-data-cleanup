@@ -1,43 +1,54 @@
 /**
   * Page: reddit.com/user/<USERNAME>/saved
+  *
   * Run from: Dev tools console
   */
 
-async function wait(ms = 100) {
-  return new Promise((done) =>
-    setTimeout(() => requestAnimationFrame(done), ms)
-  );
-}
-
-function queryEntries() {
-	return [...document.querySelectorAll('[data-oc]')]
-}
-
-async function exec() {
-	const entries = queryEntries()
+(async function exec(_entries = []) {
+	/**
+    * Timing can sometimes be sensitive on lower end PCs/Macs. If that's the case, increase this number in increments of 100 until the script is stable.
+    *
+    * NOTE: 500 = 500 milliseconds = 0.5 seconds
+    */
+  let INTERACTION_DELAY = 100
+	
+	async function wait(ms = INTERACTION_DELAY) {
+	  return new Promise((done) =>
+	    setTimeout(() => requestAnimationFrame(done), ms)
+	  );
+	}
+	
+	function queryEntries() {
+		return [...document.querySelectorAll('[data-oc]')]
+	}
+	
+	let entries = _entries.length ? _entries : queryEntries()
 
 	if (entries.length) {
 		console.log("🧹 Deleting saved items...")
 
 		for (const entry of entries) {
-			const saveBtn = entry.querySelector('.save-button > a')
+			let saveBtn = entry.querySelector('.save-button > a')
 
 			if (saveBtn.innerText === 'unsave') {
-				btn.click()
+				saveBtn.click()
+				
 				await wait(250)
 			}
 
+			saveBtn = undefined
 			entry.parentNode.removeChild(entry)
 			await wait()
 		}
 	}
 
-	if (queryEntries().length > 0) {
+	entries = queryEntries()
+	INTERACTION_DELAY = undefined
+
+	if (entries.length > 0) {
 		console.log("🧲 There are more saved posts/comments to remove")
-		return exec()
+		return exec(entries)
+	} else {
+		console.log("✨ Done")
 	}
-
-	console.log("✨ Done")
-}
-
-exec()
+})()
