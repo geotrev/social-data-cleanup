@@ -18,7 +18,7 @@ _WARNING: Although the scripts are tested and safe as of the last date of their 
 
 ### Twitter
 
-All scripts are dependent on the `[data-testid]` attribute (in most cases) on page elements, so if those go away anytime in the future, this script won't work. It runs purely on truthy heuristics, so the scripts will skip mismatched page elements and continue their loops.
+All scripts are dependent on the `[data-testid]` attribute (in most cases) on page elements, so if those go away anytime in the future, the scripts won't work. Validation of DOM structure is in place to gracefully continue the loop if an iteration fails.
 
 ### Reddit
 
