@@ -6,29 +6,29 @@
   * Runs from: Dev tools console
   */
 
-/**
-  * Specify your Twitter handle:
-  */
-let TWITTER_HANDLE = "@TWITTER_HANDLE"
+(async function exec(_cells = []) {
+  /**
+    * Specify your Twitter handle:
+    */
+  let TWITTER_HANDLE = "@TWITTER_HANDLE"
+  
+  /**
+    * Timing can sometimes be sensitive on lower end PCs/Macs. If that's the case, increase this number in increments of 100 until the script is stable.
+    *
+    * NOTE: 500 = 500 milliseconds = 0.5 seconds
+    */
+  let INTERACTION_DELAY = 500
+  
+  async function wait() {
+    return new Promise((done) =>
+      setTimeout(() => requestAnimationFrame(done), INTERACTION_DELAY)
+    );
+  }
+  
+  function queryCells() {
+    return [...document.querySelectorAll('[data-testid="tweet"]')];
+  }
 
-/**
-  * Timing can sometimes be sensitive on lower end PCs/Macs. If that's the case, increase this number in increments of 100 until the script is stable.
-  *
-  * NOTE: 500 = 500 milliseconds = 0.5 seconds
-  */
-let INTERACTION_DELAY = 500
-
-async function wait() {
-  return new Promise((done) =>
-    setTimeout(() => requestAnimationFrame(done), INTERACTION_DELAY)
-  );
-}
-
-function queryCells() {
-  return [...document.querySelectorAll('[data-testid="tweet"]')];
-}
-
-async function exec(_cells = []) {
   let cells = _cells.length ? _cells : queryCells();
   console.log("🧹 Deleting tweets");
 
@@ -96,10 +96,8 @@ async function exec(_cells = []) {
 
   if (cells.length) {
     console.log("🧲 There are more tweets to delete");
-    return exec(cells);
+    await exec(cells);
+  } else {
+    console.log("✨ Done!");
   }
-
-  console.log("✨ Done!");
-}
-
-exec()
+})()
