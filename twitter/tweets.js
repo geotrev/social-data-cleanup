@@ -78,10 +78,10 @@ async function exec(_cells = []) {
       let cellIndex = timelineCells.indexOf(cellContainer)
       timelineCells.slice(0, cellIndex).forEach(child => child.parentNode.removeChild(child))
     
-     deleteBtn = undefined
-     confirmDialogBtn = undefined
-     timelineCells = undefined
-     cellIndex = undefined
+      deleteBtn = undefined
+      confirmDialogBtn = undefined
+      timelineCells = undefined
+      cellIndex = undefined
     }
 
     cellContainer = undefined
