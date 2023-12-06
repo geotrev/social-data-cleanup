@@ -3,42 +3,46 @@
   * Run from: Dev tools console
   */
 
-async function wait(ms = 500) {
-  return new Promise((done) =>
-    setTimeout(() => requestAnimationFrame(done), ms)
-  );
-}
+(async function exec(_cells = []) {
+  
+  /**
+    * Timing can sometimes be sensitive on lower end PCs/Macs. If that's the case, increase this number in increments of 100 until the script is stable.
+    *
+    * NOTE: 500 = 500 milliseconds = 0.5 seconds
+    */
+  let INTERACTION_DELAY = 500
+ 
+  async function wait() {
+    return new Promise((done) =>
+      setTimeout(() => requestAnimationFrame(done), INTERACTION_DELAY)
+    );
+  }
+  
+  function queryCells() {
+    return [...document.querySelectorAll('[data-testid="tweet"]')];
+  }
 
-function queryCells() {
-  return [...document.querySelectorAll('[data-testid="tweet"]')];
-}
-
-async function exec() {
-  const cells = queryCells();
+  let cells = _cells.length ? _cells : queryCells();
   console.log("🧹 Deleting tweets");
 
   for (const cell of cells) {
-    const shareBtn = cell.querySelector('[aria-label="Share Tweet"]');
-
-    shareBtn.click();
-    await wait();
-
-    const unbookmarkItem = document.querySelector(
-      '[data-testid="Dropdown"] > [role="menuitem"]:last-child'
+    let unbookmarkItem = document.querySelector(
+      '[data-testid="removeBookmark"]'
     );
 
     unbookmarkItem.click();
+    unbookmarkItem = undefined
+   
     await wait();
   }
 
-  const moreCells = queryCells();
+  cells = queryCells();
+  INTERACTION_DELAY = undefined
 
-  if (moreCells.length) {
+  if (cells.length) {
     console.log("🧲 There are more tweets to delete");
-    return exec();
+    return exec(cells);
+  } else {
+    console.log("✨ Done!");
   }
-
-  console.log("✨ Done!");
-}
-
-exec()
+})()
