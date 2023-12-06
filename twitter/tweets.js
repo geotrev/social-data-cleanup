@@ -93,6 +93,7 @@
   }
 
   cells = queryCells();
+  INTERACTION_DELAY = undefined
 
   if (cells.length) {
     console.log("🧲 There are more tweets to delete");
