@@ -28,8 +28,8 @@ function queryCells() {
   return [...document.querySelectorAll('[data-testid="tweet"]')];
 }
 
-async function exec(cells = []) {
-  let cells = cells.length ? cells : queryCells();
+async function exec(_cells = []) {
+  let cells = _cells.length ? _cells : queryCells();
   console.log("🧹 Deleting tweets");
 
   for (const cell of cells) {
