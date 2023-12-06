@@ -12,7 +12,7 @@ The scripts in this repository run in real time, on a browser page you are logge
 
 Navigate to a script you would like to use on this repository. For example: `twitter` > `likes.js`. Copy the script by selecting the "Raw" button near the top right of the code panel, and selecting the full result on the opened page/tab. Go to the corresponding page on Twitter (specified in the script at the top), then paste it into dev tools console.
 
-Finally, add any optional required variable data to execute it correctly (e.g., username).
+Finally, add any required variable data to execute it correctly (e.g., username).
 
 _WARNING: Although the scripts are tested and safe as of the last date of their commit (check commit date by browsing into the corresponding folder), please note they are **destructive** and will permanently alter the state of your social media data. There are no filters to white list specific items, or date limits. If this is something you want to do, open your saved items separately so you can re-save/like them later._
 
