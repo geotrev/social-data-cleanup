@@ -2,10 +2,20 @@
   * Pages:
   * - twitter.com/<user_handle>/
   * - twitter.com/<user_handle>/with_replies
+  *
   * Runs from: Dev tools console
   */
 
+/**
+  * Specify your Twitter handle:
+  */
 let TWITTER_HANDLE = "@TWITTER_HANDLE"
+
+/**
+  * Timing can sometimes be sensitive on lower end PCs/Macs. If that's the case, increase this number in increments of 100 until the script is stable.
+  *
+  * NOTE: 500 = 500 milliseconds = 0.5 seconds
+  */
 let INTERACTION_DELAY = 500
 
 async function wait() {
@@ -19,24 +29,27 @@ function queryCells() {
 }
 
 async function exec() {
-  const cells = queryCells();
+  let cells = queryCells();
   console.log("🧹 Deleting tweets");
 
   for (const cell of cells) {
-    const cellContainer = cell.closest('[data-testid="cellInnerDiv"]')
-    const isSelfTweet = !!cell.querySelector('[data-testid="User-Name"]')?.innerText.includes(TWITTER_HANDLE)
-    const isRetweet = !!cell.querySelector('[data-testid="socialContext"]');
-    const overflowBtn = cell.querySelector('[data-testid="caret"]');
+    let cellContainer = cell.closest('[data-testid="cellInnerDiv"]')
+    let isSelfTweet = !!cell.querySelector('[data-testid="User-Name"]')?.innerText.includes(TWITTER_HANDLE)
+    let isRetweet = !!cell.querySelector('[data-testid="socialContext"]');
+    let overflowBtn = cell.querySelector('[data-testid="caret"]');
 
     if (isRetweet) {
-      const untweetBtn = cell.querySelector('[data-testid="unretweet"]');
+      let untweetBtn = cell.querySelector('[data-testid="unretweet"]');
       untweetBtn.click();
       await wait();
 
-      const undoBtn = document.querySelector(
+      let undoBtn = document.querySelector(
         '[data-testid="Dropdown"] > [data-testid="unretweetConfirm"]'
       );
       undoBtn.click();
+
+     untweetBtn = undefined
+     undoBtn = undefined
     } else {
       if (!isSelfTweet) continue
 
@@ -44,14 +57,15 @@ async function exec() {
       await wait();
 
       // first menu item is the "delete" button
-      const deleteBtn = document.querySelector(
+      let deleteBtn = document.querySelector(
         '[data-testid="Dropdown"] > [role="menuitem"]'
       );
 
       deleteBtn.click();
+     
       await wait();
 
-      const confirmDialogBtn = document.querySelector(
+      let confirmDialogBtn = document.querySelector(
         '[data-testid="confirmationSheetDialog"] [data-testid="confirmationSheetConfirm"]'
       );
       confirmDialogBtn.click();
@@ -60,15 +74,25 @@ async function exec() {
 
       // Cleanup all tweets above the removed tweet.
       // Unfortunately Twitter doesn't automatically purge these. :/
-      const timelineCells = [...cellContainer.parentNode.children]
-      const cellIndex = timelineCells.indexOf(cellContainer)
+      let timelineCells = [...cellContainer.parentNode.children]
+      let cellIndex = timelineCells.indexOf(cellContainer)
       timelineCells.slice(0, cellIndex).forEach(child => child.parentNode.removeChild(child))
+    
+     deleteBtn = undefined
+     confirmDialogBtn = undefined
+     timelineCells = undefined
+     cellIndex = undefined
     }
+
+    cellContainer = undefined
+    isSelfTweet = undefined
+    isRetweet = undefined
+    overflowBtn = undefined
 
     await wait();
   }
 
-  const moreCells = queryCells();
+  cells = queryCells();
 
   if (moreCells.length) {
     console.log("🧲 There are more tweets to delete");
