@@ -10,7 +10,7 @@ The scripts in this repository run in real time, on a browser page you are logge
 
 ## Usage
 
-Navigate to a script you would like to use. For example: `Twitter` > `Likes`. Copy the script by selecting the "Raw" button near the top right of the code panel, and selecting the full result on the opened page/tab. Go to the corresponding page on Twitter (specified in the script at the top), then paste it into dev tools console.
+Navigate to a script you would like to use on this repository. For example: `twitter` > `likes.js`. Copy the script by selecting the "Raw" button near the top right of the code panel, and selecting the full result on the opened page/tab. Go to the corresponding page on Twitter (specified in the script at the top), then paste it into dev tools console.
 
 Finally, add any optional required variable data to execute it correctly (e.g., username).
 
