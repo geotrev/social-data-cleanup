@@ -11,7 +11,7 @@
     *
     * NOTE: 500 = 500 milliseconds = 0.5 seconds
     */
-  let DELETE_DELAY = 150
+  let INTERACTION_DELAY = 150
   
   async function wait() {
     return new Promise((done) =>
@@ -44,7 +44,7 @@
   }
 
   cells = queryCells();
-  DELETE_DELAY = undefined
+  INTERACTION_DELAY = undefined
 
   if (cells.length) {
      console.log("🧲 There are more likes to remove");
