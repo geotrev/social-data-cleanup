@@ -6,7 +6,7 @@
   * Runs from: Dev tools console
   */
 
-(async function exec() {
+(async function exec(_entries = []) {
 	 /**
     * Timing can sometimes be sensitive on lower end PCs/Macs. If that's the case, increase this number in increments of 100 until the script is stable.
     *
@@ -24,7 +24,7 @@
 		return [...document.querySelectorAll('[data-oc]')]
 	}
 
-	let entries = queryEntries()
+	let entries = _entries.length ? _entries : queryEntries()
 
 	if (entries.length) {
 		console.log("🧹 Removing votes...")
@@ -34,12 +34,12 @@
 				entry.parentNode.removeChild(entry)
 			} else {
 				let btn = entry.querySelector('.upmod') || entry.querySelector('.downmod')	
+
 				if (btn) btn.click()
 
-				btn = undefined
-				
 				await wait(250)
 
+				btn = undefined
 				entry.parentNode.removeChild(entry)
 			}
 			
